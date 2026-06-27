@@ -15465,6 +15465,7 @@
         },
         "definition": "label_values(node_uname_info{job=\"$job\"}, nodename)",
         "includeAll": false,
+        "hide": "2",
         "label": "Nodename",
         "name": "nodename",
         "options": [],
@@ -15485,6 +15486,7 @@
         },
         "definition": "label_values(node_uname_info{job=\"$job\", nodename=\"$nodename\"}, instance)",
         "includeAll": false,
+        "hide": "2",
         "label": "Instance",
         "name": "node",
         "options": [],
@@ -15506,7 +15508,7 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "Node Exporter Full",
-  "uid": "rYdddlPWk",
-  "version": 102,
+  "uid": "rYdddlPWkL",
+  "version": 103,
   "weekStart": ""
 }
