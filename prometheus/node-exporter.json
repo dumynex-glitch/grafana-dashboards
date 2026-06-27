@@ -15430,6 +15430,7 @@
         "current": {},
         "includeAll": false,
         "label": "Datasource",
+        "hide": "hideVariable",
         "name": "ds_prometheus",
         "options": [],
         "query": "prometheus",
