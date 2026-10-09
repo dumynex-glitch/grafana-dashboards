@@ -225,6 +225,14 @@ Making the repository private returns **404** to an unauthenticated `spec.url` f
 
 `raw.githubusercontent.com` does accept HTTP Basic auth: any username with a token as the password returns 200.
 
+**Step 1 — confirm the field exists on your build.** The operator's documentation tracks upstream master, so a field may be documented but absent, or shaped differently:
+
+```bash
+kubectl explain grafanadashboard.spec.urlAuthorization.basicAuth --recursive
+```
+
+**Step 2 — create the Secret.** Scope the token to *Contents: Read* on that single repository; fetching a dashboard never needs write access.
+
 ```bash
 kubectl create secret generic dashboard-git -n grafana \
   --from-literal=username=x-access-token \
@@ -232,8 +240,13 @@ kubectl create secret generic dashboard-git -n grafana \
   --dry-run=client -o yaml | kubectl apply -f -
 ```
 
+**Step 3 — add both fields to the CR.** `contentCacheDuration` belongs here too: it is what made this failure invisible in the first place.
+
 ```yaml
 spec:
+  instanceSelector:
+    matchLabels:
+      dashboards: grafana
   url: https://raw.githubusercontent.com/owner/repo/refs/heads/master/dash.json
   urlAuthorization:
     basicAuth:
@@ -243,7 +256,24 @@ spec:
       password:
         name: dashboard-git
         key: password
+  resyncPeriod: 10m
+  contentCacheDuration: 1m    # must be shorter than resyncPeriod
 ```
 
-> - Scope the token to **Contents: Read** on that single repository — fetching a dashboard never needs write access.
-> - Confirm the field exists on your build first: `kubectl explain grafanadashboard.spec.urlAuthorization`.
+**Step 4 — apply, then verify.** Server-side dry run first: an unknown field would otherwise apply cleanly and change nothing.
+
+```bash
+kubectl apply -f grafanadashboard-disk.yaml -n grafana --dry-run=server
+kubectl apply -f grafanadashboard-disk.yaml -n grafana
+
+kubectl get grafanadashboard disk-usage -n grafana -o jsonpath='{.status.conditions}'; echo
+```
+
+Then confirm the fetch actually succeeded instead of trusting the status:
+
+```bash
+kubectl logs -n grafana -l app.kubernetes.io/name=grafana-operator --since=5m \
+  | grep -iE 'disk-usage|404|failed to (fetch|get)'
+```
+
+Any hit here is the failure. Silence means the fetch went through.
