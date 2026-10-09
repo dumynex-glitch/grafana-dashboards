@@ -122,3 +122,99 @@ On Grafana, it only requires a configured target under any `job_name`. For examp
         - targets:
            - server_hostname:9167
 ```
+
+
+
+## Disk Usage
+
+- For [node_exporter](https://github.com/prometheus/node_exporter)
+- Monitor per-mount usage and inode pressure across a fleet, with thresholds that match the included alert rules.
+
+Lives in [`cluster/disk-usage.json`](cluster/disk-usage.json).
+
+Every panel — including the `Host` variable — is driven by a single recording rule, so the dashboard renders empty until it exists:
+
+```yaml
+groups:
+  - name: disk-usage
+    rules:
+      - record: node_filesystem:usage_ratio
+        expr: |
+          1 - (
+            node_filesystem_avail_bytes{fstype!~"tmpfs|overlay|squashfs|ramfs|fuse.*|nsfs|vfat"}
+            /
+            node_filesystem_size_bytes{fstype!~"tmpfs|overlay|squashfs|ramfs|fuse.*|nsfs|vfat"}
+          )
+```
+
+The filter matches on `fstype` only, never `mountpoint`, so a newly created mount is picked up without editing this repo. `vfat` is excluded because firmware and boot partitions regularly report near-full by design.
+
+Scraping follows the default job, so nothing changes if `node` is already configured:
+
+```yaml
+  - job_name: node
+    static_configs:
+      - targets: ['localhost:9100']
+```
+
+> - The datasource is chosen by the dashboard's own `ds_prometheus` variable, and `Host` lists `label_values(node_filesystem:usage_ratio, instance)` — both empty until the rule above is loaded.
+> - Warning and critical thresholds are raw ratios on a `percentunit` gauge (0.85 / 0.95), so the panel, the PromQL and the alert rule read identically.
+> - The `Critical mounts` row pins one mount and one instance per gauge — edit it for your own fleet. The `Usage by mount` and `Trend` rows stay unpinned and cover everything the rule sees.
+
+
+
+## Importing dashboards with a GrafanaDashboard CR
+
+A dashboard that imports cleanly through the Grafana UI can fail as a `GrafanaDashboard` CR, and an edited dashboard can appear never to have changed. Three separate causes, all reproducible.
+
+### 1. `__inputs` placeholders are not resolved for you
+
+Dashboards published to grafana.com are exported for sharing: a `__inputs` array plus `${DS_PROMETHEUS}` placeholders in every panel. The import wizard prompts for the datasource and rewrites them in place. A CR posts the JSON verbatim, so the placeholders survive and every panel reports *the datasource is not valid*.
+
+See what the file expects:
+
+```bash
+jq -c '.__inputs // "none"' dash.json
+```
+
+Resolve it declaratively:
+
+```yaml
+spec:
+  datasources:
+    - inputName: DS_PROMETHEUS     # exactly __inputs[].name, character for character
+      datasourceName: prometheus   # the datasource's name as Grafana knows it, not its UID
+```
+
+A dashboard that carries its own `datasource` template variable instead of a `__inputs` array needs none of this.
+
+### 2. The CRD is the contract, not the documentation
+
+Upstream docs track master and can describe fields your installed version does not have. Ask the cluster instead:
+
+```bash
+kubectl explain grafanadashboard.spec.datasources --recursive
+
+kubectl get crd grafanadashboards.grafana.integreatly.org -o json \
+  | jq -r '.spec.versions[] | select(.name=="v1beta1")
+           | .schema.openAPIV3Schema.properties.spec.properties | keys[]' | sort
+```
+
+Always apply with `--dry-run=server`. `--dry-run=client` accepts an unknown field and the apply becomes a silent no-op; only the server decodes against your schema.
+
+### 3. `resyncPeriod` re-applies the cache, it does not re-fetch it
+
+Content fetched from `spec.url` is cached — default **24h**, controlled by `contentCacheDuration`. Pushing a new revision can therefore stay invisible for a day while every reconcile reports success: a green status that says nothing about freshness.
+
+```yaml
+spec:
+  url: https://example.com/dash.json
+  resyncPeriod: 10m
+  contentCacheDuration: 1m   # must be shorter than resyncPeriod
+```
+
+Verify what Grafana serves rather than what the CR reports:
+
+```bash
+curl -s -u admin:$GRAFANA_PASS "$GRAFANA/api/dashboards/uid/disk-usage" | jq '.dashboard.panels | length'
+```
