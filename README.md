@@ -218,3 +218,32 @@ Verify what Grafana serves rather than what the CR reports:
 ```bash
 curl -s -u admin:$GRAFANA_PASS "$GRAFANA/api/dashboards/uid/disk-usage" | jq '.dashboard.panels | length'
 ```
+
+### 4. A private source repository needs `urlAuthorization`
+
+Making the repository private returns **404** to an unauthenticated `spec.url` fetch. The URL that resolved yesterday stops working, and because the content cache is still warm the dashboard keeps rendering the last bytes it saw while every reconcile reports success — another stale success, invisible until the cache expires.
+
+`raw.githubusercontent.com` does accept HTTP Basic auth: any username with a token as the password returns 200.
+
+```bash
+kubectl create secret generic dashboard-git -n grafana \
+  --from-literal=username=x-access-token \
+  --from-literal=password=$PAT \
+  --dry-run=client -o yaml | kubectl apply -f -
+```
+
+```yaml
+spec:
+  url: https://raw.githubusercontent.com/owner/repo/refs/heads/master/dash.json
+  urlAuthorization:
+    basicAuth:
+      username:
+        name: dashboard-git
+        key: username
+      password:
+        name: dashboard-git
+        key: password
+```
+
+> - Scope the token to **Contents: Read** on that single repository — fetching a dashboard never needs write access.
+> - Confirm the field exists on your build first: `kubectl explain grafanadashboard.spec.urlAuthorization`.
