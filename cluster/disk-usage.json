@@ -1,22 +1,60 @@
 {
   "__requires": [
-    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "11.6.1" },
-    { "type": "datasource", "id": "prometheus", "name": "Prometheus", "version": "1.0.0" },
-    { "type": "panel", "id": "stat", "name": "Stat", "version": "" },
-    { "type": "panel", "id": "bargauge", "name": "Bar gauge", "version": "" },
-    { "type": "panel", "id": "table", "name": "Table", "version": "" },
-    { "type": "panel", "id": "timeseries", "name": "Time series", "version": "" }
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "11.6.1"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "bargauge",
+      "name": "Bar gauge",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
   ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": { "type": "datasource", "uid": "grafana" },
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
-        "target": { "limit": 100, "matchAny": false, "tags": [], "type": "dashboard" },
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -29,24 +67,46 @@
   "panels": [
     {
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
       "id": 101,
       "panels": [],
       "title": "Summary",
       "type": "row"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
       "description": "Distinct hosts with at least one filesystem the recording rule sees. Expected 9 — matches verify.sh metrics.",
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green" } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 6, "x": 0, "y": 1 },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 1
+      },
       "id": 1,
       "options": {
         "colorMode": "value",
@@ -54,7 +114,13 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
@@ -74,17 +140,34 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
       "description": "Mounts tracked by node_filesystem:usage_ratio after the fstype filter. Measured 2026-10-09: 23 (db 3/3/3, app-01 3, app-02 3, minio 3, redis 2, cicd 2, keycloak 1). A drop here means node_exporter stopped exporting a mount — fix the exporter, not this dashboard.",
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green" } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 6, "x": 6, "y": 1 },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 1
+      },
       "id": 2,
       "options": {
         "colorMode": "value",
@@ -92,7 +175,13 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
@@ -112,20 +201,38 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
       "description": "Alerts firing right now. Green zero = healthy. `or vector(0)` keeps it at 0 instead of No data when nothing fires — an empty count reads as a broken panel otherwise.",
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [ { "color": "green" }, { "color": "red", "value": 1 } ]
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
           }
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 6, "x": 12, "y": 1 },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 1
+      },
       "id": 3,
       "options": {
         "colorMode": "value",
@@ -133,7 +240,13 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
@@ -153,20 +266,38 @@
       "type": "stat"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
       "description": "Filesystems the kernel dropped read-only. Normally 0; any non-zero value means I/O errors — check dmesg and SMART. Uses the WIDER DiskReadOnly filter (iso9660|romfs|cramfs|erofs|vfat included) so /boot/efi mounted ro by design never counts.",
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [ { "color": "green" }, { "color": "red", "value": 1 } ]
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
           }
         },
         "overrides": []
       },
-      "gridPos": { "h": 4, "w": 6, "x": 18, "y": 1 },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 1
+      },
       "id": 4,
       "options": {
         "colorMode": "value",
@@ -174,7 +305,13 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "percentChangeColorMode": "standard",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "showPercentChange": false,
         "textMode": "auto",
         "wideLayout": true
@@ -195,44 +332,407 @@
     },
     {
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
-      "id": 102,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 105,
       "panels": [],
-      "title": "Usage by mount",
+      "title": "Critical mounts",
       "type": "row"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
-      "description": "Thresholds are the alert thresholds verbatim: 0.85 = DiskFillingUp, 0.95 = DiskCriticallyFull. A red bar always means an alert is firing. Value shown as a raw ratio (percentunit) so panel, PromQL and alert expression read the same number.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
+      "description": "Ignores the Host variable on purpose — this row always shows these four mounts, whatever the dashboard filter is set to. Thresholds are the alert thresholds verbatim (0.85 = DiskFillingUp, 0.95 = DiskCriticallyFull), the same steps the bargauge below uses, so panel and alert read identical numbers. No `or vector(0)`: if the mount or the hostname disappears, No Data is the honest answer — a fake 0 would report an empty disk. Renaming a host means editing this panel.",
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
+          "color": {
+            "mode": "thresholds"
+          },
           "max": 1,
           "min": 0,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "rgba(50, 172, 45, 0.97)" },
-              { "color": "rgba(237, 129, 40, 0.89)", "value": 0.85 },
-              { "color": "rgba(245, 54, 54, 0.9)", "value": 0.95 }
+              {
+                "color": "rgba(50, 172, 45, 0.97)"
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 0.85
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 0.95
+              }
             ]
           },
           "unit": "percentunit"
         },
         "overrides": []
       },
-      "gridPos": { "h": 12, "w": 12, "x": 0, "y": 6 },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 6
+      },
+      "id": 9,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "maxVizHeight": 300,
+        "legend": {
+          "showLegend": false,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "text": {}
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "node_filesystem:usage_ratio{instance=\"db-master:9100\", mountpoint=\"/var\"}",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "{{instance}} {{mountpoint}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "db-master /var",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
+      "description": "Ignores the Host variable on purpose — this row always shows these four mounts, whatever the dashboard filter is set to. Thresholds are the alert thresholds verbatim (0.85 = DiskFillingUp, 0.95 = DiskCriticallyFull), the same steps the bargauge below uses, so panel and alert read identical numbers. No `or vector(0)`: if the mount or the hostname disappears, No Data is the honest answer — a fake 0 would report an empty disk. Renaming a host means editing this panel.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "max": 1,
+          "min": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)"
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 0.85
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 0.95
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 6
+      },
+      "id": 10,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "maxVizHeight": 300,
+        "legend": {
+          "showLegend": false,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "text": {}
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "node_filesystem:usage_ratio{instance=\"db-slave:9100\", mountpoint=\"/var\"}",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "{{instance}} {{mountpoint}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "db-slave /var",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
+      "description": "Ignores the Host variable on purpose — this row always shows these four mounts, whatever the dashboard filter is set to. Thresholds are the alert thresholds verbatim (0.85 = DiskFillingUp, 0.95 = DiskCriticallyFull), the same steps the bargauge below uses, so panel and alert read identical numbers. No `or vector(0)`: if the mount or the hostname disappears, No Data is the honest answer — a fake 0 would report an empty disk. Renaming a host means editing this panel.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "max": 1,
+          "min": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)"
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 0.85
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 0.95
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 6
+      },
+      "id": 11,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "maxVizHeight": 300,
+        "legend": {
+          "showLegend": false,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "text": {}
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "node_filesystem:usage_ratio{instance=\"db-replica:9100\", mountpoint=\"/var\"}",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "{{instance}} {{mountpoint}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "db-replica /var",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
+      "description": "Ignores the Host variable on purpose — this row always shows these four mounts, whatever the dashboard filter is set to. Thresholds are the alert thresholds verbatim (0.85 = DiskFillingUp, 0.95 = DiskCriticallyFull), the same steps the bargauge below uses, so panel and alert read identical numbers. No `or vector(0)`: if the mount or the hostname disappears, No Data is the honest answer — a fake 0 would report an empty disk. Renaming a host means editing this panel.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "max": 1,
+          "min": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)"
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 0.85
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 0.95
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 6
+      },
+      "id": 12,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "sizing": "auto",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "maxVizHeight": 300,
+        "legend": {
+          "showLegend": false,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        },
+        "text": {}
+      },
+      "pluginVersion": "11.6.1",
+      "targets": [
+        {
+          "editorMode": "code",
+          "expr": "node_filesystem:usage_ratio{instance=\"minio:9100\", mountpoint=\"/mnt/data\"}",
+          "format": "time_series",
+          "instant": true,
+          "legendFormat": "{{instance}} {{mountpoint}}",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "minio /mnt/data",
+      "type": "gauge"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 102,
+      "panels": [],
+      "title": "Usage by mount",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
+      "description": "Thresholds are the alert thresholds verbatim: 0.85 = DiskFillingUp, 0.95 = DiskCriticallyFull. A red bar always means an alert is firing. Value shown as a raw ratio (percentunit) so panel, PromQL and alert expression read the same number.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "max": 1,
+          "min": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)"
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 0.85
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 0.95
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 15
+      },
       "id": 5,
       "options": {
         "displayMode": "basic",
-        "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
         "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
         "namePlacement": "auto",
         "orientation": "horizontal",
-        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
         "showUnfilled": true,
         "sizing": "auto",
         "text": {},
@@ -254,29 +754,66 @@
       "type": "bargauge"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
       "description": "Coverage list — exactly the series the recording rule sees, no filter repeated here so it cannot drift from prometheusrule-disk.yaml. Each row is a mount an alert protects. Sorted by used % descending; colour cells carry the same 0.85/0.95 thresholds as the bargauge.",
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green" } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": [
           {
-            "matcher": { "id": "byName", "options": "Used %" },
+            "matcher": {
+              "id": "byName",
+              "options": "Used %"
+            },
             "properties": [
-              { "id": "unit", "value": "percentunit" },
-              { "id": "custom.cellOptions", "value": { "type": "color-background" } },
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
               {
                 "id": "thresholds",
                 "value": {
                   "mode": "absolute",
                   "steps": [
-                    { "color": "rgba(50, 172, 45, 0.97)" },
-                    { "color": "rgba(237, 129, 40, 0.89)", "value": 0.85 },
-                    { "color": "rgba(245, 54, 54, 0.9)", "value": 0.95 }
+                    {
+                      "color": "rgba(50, 172, 45, 0.97)"
+                    },
+                    {
+                      "color": "rgba(237, 129, 40, 0.89)",
+                      "value": 0.85
+                    },
+                    {
+                      "color": "rgba(245, 54, 54, 0.9)",
+                      "value": 0.95
+                    }
                   ]
                 }
               }
@@ -284,12 +821,28 @@
           }
         ]
       },
-      "gridPos": { "h": 12, "w": 12, "x": 12, "y": 6 },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 12,
+        "y": 15
+      },
       "id": 6,
       "options": {
-        "cellHeight": { "mode": "sm" },
-        "footer": { "countRows": false, "fields": "", "reducer": ["sum"], "show": false },
-        "header": { "show": true }
+        "cellHeight": {
+          "mode": "sm"
+        },
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "header": {
+          "show": true
+        }
       },
       "pluginVersion": "11.6.1",
       "targets": [
@@ -308,12 +861,23 @@
       "transformations": [
         {
           "id": "sortBy",
-          "options": { "fields": {}, "sort": [ { "field": "Value", "desc": true } ] }
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Value",
+                "desc": true
+              }
+            ]
+          }
         },
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true, "job": true },
+            "excludeByName": {
+              "Time": true,
+              "job": true
+            },
             "indexByName": {
               "instance": 0,
               "mountpoint": 1,
@@ -334,18 +898,28 @@
     },
     {
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 18 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
       "id": 103,
       "panels": [],
       "title": "Trend",
       "type": "row"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
       "description": "Threshold lines at 0.85 and 0.95 are drawn from the same thresholds as the alerts. Sustained downward slope toward the line is what DiskWillFillIn24h projects 24h forward — a disk can sit at 60% and still be alerting if it is filling fast.",
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "palette-classic" },
+          "color": {
+            "mode": "palette-classic"
+          },
           "custom": {
             "axisBorderShow": false,
             "axisCenteredZero": false,
@@ -357,16 +931,27 @@
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
-            "hideFrom": { "legend": false, "tooltip": false, "viz": false },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
             "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
-            "scaleDistribution": { "type": "linear" },
+            "scaleDistribution": {
+              "type": "linear"
+            },
             "showPoints": "never",
             "spanNulls": false,
-            "stacking": { "group": "A", "mode": "none" },
-            "thresholdsStyle": { "mode": "line" }
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "line"
+            }
           },
           "mappings": [],
           "max": 1,
@@ -374,20 +959,44 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              { "color": "green" },
-              { "color": "rgba(237, 129, 40, 0.89)", "value": 0.85 },
-              { "color": "rgba(245, 54, 54, 0.9)", "value": 0.95 }
+              {
+                "color": "green"
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 0.85
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 0.95
+              }
             ]
           },
           "unit": "percentunit"
         },
         "overrides": []
       },
-      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 19 },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
       "id": 7,
       "options": {
-        "legend": { "calcs": ["lastNotNull"], "displayMode": "table", "placement": "bottom", "showLegend": true },
-        "tooltip": { "hideZeros": false, "mode": "multi", "sort": "desc" }
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "desc"
+        }
       },
       "pluginVersion": "11.6.1",
       "targets": [
@@ -406,30 +1015,69 @@
     },
     {
       "collapsed": false,
-      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 28 },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
       "id": 104,
       "panels": [],
       "title": "Alerts",
       "type": "row"
     },
     {
-      "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${ds_prometheus}"
+      },
       "description": "Currently firing alerts with the labels they page with. Reads the same $labels.instance / $labels.mountpoint the notification renders, so panel and message match character for character. EMPTY TABLE = NOTHING FIRING, not a broken query.",
       "fieldConfig": {
         "defaults": {
-          "color": { "mode": "thresholds" },
-          "custom": { "align": "auto", "cellOptions": { "type": "auto" }, "inspect": false },
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "thresholds": { "mode": "absolute", "steps": [ { "color": "green" } ] }
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
         },
         "overrides": []
       },
-      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 29 },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
       "id": 8,
       "options": {
-        "cellHeight": { "mode": "sm" },
-        "footer": { "countRows": false, "fields": "", "reducer": ["sum"], "show": false },
-        "header": { "show": true }
+        "cellHeight": {
+          "mode": "sm"
+        },
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "header": {
+          "show": true
+        }
       },
       "pluginVersion": "11.6.1",
       "targets": [
@@ -449,7 +1097,11 @@
         {
           "id": "organize",
           "options": {
-            "excludeByName": { "Time": true, "Value": true, "job": true },
+            "excludeByName": {
+              "Time": true,
+              "Value": true,
+              "job": true
+            },
             "indexByName": {
               "alertname": 0,
               "severity": 1,
@@ -472,7 +1124,10 @@
   ],
   "refresh": "1m",
   "schemaVersion": 41,
-  "tags": ["linux", "disk"],
+  "tags": [
+    "linux",
+    "disk"
+  ],
   "templating": {
     "list": [
       {
@@ -489,8 +1144,15 @@
       },
       {
         "allValue": ".*",
-        "current": { "selected": true, "text": "All", "value": "$__all" },
-        "datasource": { "type": "prometheus", "uid": "${ds_prometheus}" },
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${ds_prometheus}"
+        },
         "definition": "label_values(node_filesystem:usage_ratio, instance)",
         "includeAll": true,
         "label": "Host",
@@ -507,7 +1169,10 @@
       }
     ]
   },
-  "time": { "from": "now-24h", "to": "now" },
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
   "timezone": "browser",
   "title": "Disk Usage",
   "uid": "disk-usage",
