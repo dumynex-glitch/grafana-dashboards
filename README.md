@@ -277,3 +277,37 @@ kubectl logs -n grafana -l app.kubernetes.io/name=grafana-operator --since=5m \
 ```
 
 Any hit here is the failure. Silence means the fetch went through.
+
+### 5. The file itself may not be a dashboard
+
+None of the above matters until the JSON is the right *kind* of JSON. Grafana 13's UI export can hand you its **dashboards-as-Kubernetes-resources** schema instead of a dashboard:
+
+```json
+{ "apiVersion": "dashboard.grafana.app/v2", "kind": "Dashboard", ... }
+```
+
+It reads as plausible — panels, variables and time settings are all present — but under different keys:
+
+| classic — what import and the CR need | resource schema |
+| --- | --- |
+| `panels: [...]` | `elements: {name: {kind: Panel}}` |
+| `templating.list` | `variables: [{kind: QueryVariable}]` |
+| `time` | `timeSettings` |
+| `title`, `uid`, `schemaVersion` | `apiVersion`, `kind`, `metadata` |
+| datasource `{type, uid}` | datasource `{name}` |
+
+Neither the Import screen nor a `GrafanaDashboard` CR accepts it. Don't write a converter — fetch the classic form from the API, which is what both consumers read anyway:
+
+```bash
+curl -s -u admin:$GRAFANA_PASS \
+  "http://<grafana>/api/dashboards/uid/<uid>" | jq '.dashboard' > dash.json
+```
+
+Then strip `id`, which is the **database id of the Grafana you exported from**. A non-null `id` makes `/api/dashboards/db` treat the post as an update to that dashboard rather than a create:
+
+```bash
+jq 'del(.id)' dash.json > dash.clean.json
+```
+
+> - Cross-check the round trip: the resource export's `elements` count should equal the classic export's total leaf panels — rows plus panels nested inside them. A mismatch means the export lost something.
+> - `metadata.generation` in the resource equals `version` in the classic export. If the version the CR has cached is older than the live one, re-applying **rolls back every UI edit since** — the operator posts, it does not merge.
