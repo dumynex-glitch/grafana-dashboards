@@ -166,7 +166,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "up{cluster=~\"$cluster\", job=~\"$job\"}",
+          "expr": "up{job=~\"$job\"}",
           "interval": "",
           "legendFormat": "{{ instance }}",
           "refId": "A"
@@ -1292,9 +1292,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "Prometheus",
-          "value": "Prometheus"
+          "selected": true,
+          "text": "prometheus",
+          "value": "prometheus"
         },
         "hide": 0,
         "includeAll": false,
@@ -1311,10 +1311,9 @@
       },
       {
         "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
+          "selected": true,
+          "text": "bekape-bizn",
+          "value": "bekape-bizn"
         },
         "datasource": {
           "type": "prometheus",
@@ -1385,7 +1384,11 @@
         "type": "custom"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "kubernetes",
+          "value": "kubernetes"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"

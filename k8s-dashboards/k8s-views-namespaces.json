@@ -188,7 +188,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", image!=\"\", cluster=\"$cluster\"}[$__rate_interval])) / sum(machine_cpu_cores{cluster=\"$cluster\"})",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=~\"$namespace\", image!=\"\", cluster=\"$cluster\"}[$__rate_interval])) / sum(count(node_cpu_seconds_total{mode=\"idle\", cluster=\"$cluster\"}))",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -262,7 +262,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{namespace=~\"$namespace\", image!=\"\", cluster=\"$cluster\"}) / sum(machine_memory_bytes{cluster=\"$cluster\"})",
+          "expr": "sum(container_memory_working_set_bytes{namespace=~\"$namespace\", image!=\"\", cluster=\"$cluster\"}) / sum(sum(node_memory_MemTotal_bytes{cluster=\"$cluster\"}))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -565,7 +565,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(machine_cpu_cores{cluster=\"$cluster\"})",
+          "expr": "sum(count(node_cpu_seconds_total{mode=\"idle\", cluster=\"$cluster\"}))",
           "hide": false,
           "legendFormat": "Cluster Total",
           "range": true,
@@ -667,7 +667,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(machine_memory_bytes{cluster=\"$cluster\"})",
+          "expr": "sum(sum(node_memory_MemTotal_bytes{cluster=\"$cluster\"}))",
           "hide": false,
           "legendFormat": "Cluster Total",
           "range": true,
@@ -2887,7 +2887,11 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "prometheus",
+          "value": "prometheus"
+        },
         "hide": 0,
         "includeAll": false,
         "multi": false,
@@ -2901,7 +2905,11 @@
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "bekape-bizn",
+          "value": "bekape-bizn"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -2925,7 +2933,11 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "beone",
+          "value": "beone"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"

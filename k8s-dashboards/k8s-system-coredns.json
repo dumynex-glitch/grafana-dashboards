@@ -168,7 +168,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "up{job=~\"$job\", instance=~\"$instance\", cluster=~\"$cluster\"}",
+          "expr": "up{job=~\"$job\", instance=~\"$instance\"}",
           "interval": "",
           "legendFormat": "{{ instance }}",
           "refId": "A"
@@ -1192,7 +1192,7 @@
           "color": "rgba(255,0,255,0.7)"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 1e-09
         },
         "legend": {
           "show": true
@@ -1272,7 +1272,7 @@
           "color": "rgba(255,0,255,0.7)"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 1e-09
         },
         "legend": {
           "show": true
@@ -1352,7 +1352,7 @@
           "color": "rgba(255,0,255,0.7)"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 1e-09
         },
         "legend": {
           "show": true
@@ -1400,9 +1400,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "Prometheus",
-          "value": "Prometheus"
+          "selected": true,
+          "text": "prometheus",
+          "value": "prometheus"
         },
         "hide": 0,
         "includeAll": false,
@@ -1418,10 +1418,9 @@
       },
       {
         "current": {
-          "isNone": true,
-          "selected": false,
-          "text": "None",
-          "value": ""
+          "selected": true,
+          "text": "bekape-bizn",
+          "value": "bekape-bizn"
         },
         "datasource": {
           "type": "prometheus",
@@ -1557,12 +1556,8 @@
       {
         "current": {
           "selected": true,
-          "text": [
-            "coredns"
-          ],
-          "value": [
-            "coredns"
-          ]
+          "text": "kube-dns",
+          "value": "kube-dns"
         },
         "datasource": {
           "type": "prometheus",

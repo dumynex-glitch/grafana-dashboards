@@ -683,7 +683,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(machine_cpu_cores{node=\"$node\", cluster=\"$cluster\"})",
+          "expr": "sum(count(node_cpu_seconds_total{mode=\"idle\", instance=\"$instance\", cluster=\"$cluster\"}))",
           "interval": "$resolution",
           "legendFormat": "",
           "refId": "A"
@@ -812,7 +812,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(machine_memory_bytes{node=\"$node\", cluster=\"$cluster\"})",
+          "expr": "sum(sum(node_memory_MemTotal_bytes{instance=\"$instance\", cluster=\"$cluster\"}))",
           "instant": false,
           "interval": "",
           "legendFormat": "",
@@ -1480,14 +1480,14 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(rate(node_cpu_core_throttles_total{instance=\"$instance\", cluster=\"$cluster\"}[$__rate_interval]))",
+          "expr": "sum(rate(container_cpu_cfs_throttled_seconds_total{node=\"$node\", image!=\"\"}[$__rate_interval]))",
           "interval": "$resolution",
           "legendFormat": "Nb of cpu core throttles",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Number of CPU Core Throttled",
+      "title": "CPU CFS Throttled seconds (cAdvisor)",
       "type": "timeseries"
     },
     {
@@ -3877,7 +3877,11 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "prometheus",
+          "value": "prometheus"
+        },
         "hide": 0,
         "includeAll": false,
         "multi": false,
@@ -3891,7 +3895,11 @@
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "bekape-bizn",
+          "value": "bekape-bizn"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -3961,7 +3969,11 @@
         "type": "custom"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "app-server-01",
+          "value": "app-server-01"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -3983,7 +3995,11 @@
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "app-server-01:9100",
+          "value": "app-server-01:9100"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"

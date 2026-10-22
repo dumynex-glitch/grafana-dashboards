@@ -787,7 +787,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(machine_cpu_cores{cluster=\"$cluster\"})",
+          "expr": "sum(count(node_cpu_seconds_total{mode=\"idle\", cluster=\"$cluster\", job=\"$job\"}))",
           "hide": false,
           "legendFormat": "Total",
           "range": true,
@@ -889,7 +889,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(machine_memory_bytes{cluster=\"$cluster\"})",
+          "expr": "sum(sum(node_memory_MemTotal_bytes{cluster=\"$cluster\", job=\"$job\"}))",
           "hide": false,
           "legendFormat": "Total",
           "range": true,
@@ -1858,14 +1858,14 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(rate(node_cpu_core_throttles_total{cluster=\"$cluster\", job=\"$job\"}[$__rate_interval])) by (instance)",
+          "expr": "sum(rate(container_cpu_cfs_throttled_seconds_total{image!=\"\", cluster=\"$cluster\"}[$__rate_interval])) by (namespace)",
           "interval": "$resolution",
           "legendFormat": "{{ instance }}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "CPU Core Throttled by instance",
+      "title": "CPU CFS Throttled seconds by namespace",
       "type": "timeseries"
     },
     {
@@ -3019,9 +3019,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "",
-          "value": ""
+          "selected": true,
+          "text": "prometheus",
+          "value": "prometheus"
         },
         "hide": 0,
         "includeAll": false,
@@ -3036,7 +3036,11 @@
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "selected": true,
+          "text": "bekape-bizn",
+          "value": "bekape-bizn"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -3107,9 +3111,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "",
-          "value": ""
+          "selected": true,
+          "text": "node",
+          "value": "node"
         },
         "datasource": {
           "type": "prometheus",
