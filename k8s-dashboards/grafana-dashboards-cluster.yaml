@@ -7,11 +7,10 @@ spec:
   datasources:
     - inputName: DS_PROMETHEUS
       datasourceName: prometheus
-  folderUID: e1211a55-7f7a-4dc7-a58f-d7ee038691d5
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
-  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/k8s-system-api-server.json"
+  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/cluster/k8s-system-api-server.json"
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
@@ -22,11 +21,10 @@ spec:
   datasources:
     - inputName: DS_PROMETHEUS
       datasourceName: prometheus
-  folderUID: e1211a55-7f7a-4dc7-a58f-d7ee038691d5
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
-  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/k8s-system-coredns.json"
+  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/cluster/k8s-system-coredns.json"
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
@@ -37,11 +35,10 @@ spec:
   datasources:
     - inputName: DS_PROMETHEUS
       datasourceName: prometheus
-  folderUID: e1211a55-7f7a-4dc7-a58f-d7ee038691d5
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
-  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/k8s-views-global.json"
+  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/cluster/k8s-views-global.json"
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
@@ -52,11 +49,10 @@ spec:
   datasources:
     - inputName: DS_PROMETHEUS
       datasourceName: prometheus
-  folderUID: e1211a55-7f7a-4dc7-a58f-d7ee038691d5
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
-  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/k8s-views-namespaces.json"
+  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/cluster/k8s-views-namespaces.json"
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
@@ -67,11 +63,10 @@ spec:
   datasources:
     - inputName: DS_PROMETHEUS
       datasourceName: prometheus
-  folderUID: e1211a55-7f7a-4dc7-a58f-d7ee038691d5
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
-  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/k8s-views-nodes.json"
+  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/cluster/k8s-views-nodes.json"
 ---
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
@@ -82,8 +77,7 @@ spec:
   datasources:
     - inputName: DS_PROMETHEUS
       datasourceName: prometheus
-  folderUID: e1211a55-7f7a-4dc7-a58f-d7ee038691d5
   instanceSelector:
     matchLabels:
       dashboards: "grafana"
-  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/k8s-views-pods.json"
+  url: "https://raw.githubusercontent.com/dumynex-glitch/grafana-dashboards/master/k8s-dashboards/cluster/k8s-views-pods.json"
