@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: node
+  namespace: prometheus-operator
+  labels:
+    prometheus: system-monitoring-prometheus
+spec:
+  jobName: node
+  staticConfigs:
+  # k3s cluster nodes -> carry the `cluster` label the dotdc dashboards filter on
+  - labels:
+      job: node
+      cluster: bekape-bizn
+    targets:
+    - app-server-01:9100
+    - app-server-02:9100
+  # non-cluster hosts (their own dashboards use job=node, no cluster filter)
+  - labels:
+      job: node
+    targets:
+    - minio:9100
+    - cicd:9100
+    - redis:9100
+    - keycloak:9100
